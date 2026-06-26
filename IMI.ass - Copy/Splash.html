@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<meta name="viewport" content="width=device-width,initial-scale=1.0">
+			<link rel="stylesheet" href="style.css">
+			
+			<title>Splash Screen</title>
+			
+			<style>
+				html, body {
+					margin: 0;
+					height: 100%;
+					background: rgb(248,248,248);
+				
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+				
+				/* pic on mid */
+				img {
+					width: 130px;
+					height: auto;
+					
+					animation: fadeOut 3s forwards;
+				}
+				
+				/* Disappear */
+				@keyframes fadeOut {
+					0% {opacity: 1;}
+					70% {opacity: 1;}
+					100% {opacity: 0;}
+				}
+
+				</style>
+		</head>
+		<body>
+		
+			<img src="OLP2.jpeg" alt="Logo">
+		
+			<script>
+				setTimeout(function(){
+					window.location.href = "login.html";
+				}, 3000);
+			</script>
+		</body>
+	</html>

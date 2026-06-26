@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			
+			<title>Home - Intelligent Learning Platform</title>
+			
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+			<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+			<link rel="stylesheet" href="style.css">
+			
+			<style>
+				#splash-screen {
+					position: fixed;
+					top: 0; 
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background: #e0e5ec;
+					display: flex;
+					flex-direction: column; 
+					justify-content: center; 
+					align-items: center;
+					z-index: 10000; 
+					transition: opacity 0.5s ease, visibility 0.5s;
+				}
+				.splash-logo { 
+					font-size: 3rem; 
+					font-weight: 800;
+					color: #1a2c3e; 
+					margin-bottom: 20px; 
+					letter-spacing: 2px; 
+				}
+				
+				.spinner-custom {
+					width: 50px;
+					height: 50px;
+					border: 5px solid #babecc;
+					border-top: 5px solid #2a5298;
+					border-radius: 50%;
+					
+					/*loading time icon*/
+					animation: spin 1s linear infinite; 
+					box-shadow: 3px 3px 6px #babecc,
+					-3px -3px 6px #fff;
+				}
+					/*loading icon*/
+				@keyframes spin {
+					0% { transform: rotate(0deg); } 
+					100% { transform: rotate(360deg); } 
+				}
+
+				.top-header { 
+					display: flex;
+					justify-content: space-between; 
+					align-items: center; 
+					padding: 25px 20px;
+					max-width: 1200px; 
+					margin: 0 auto;
+				}
+				.logo-text { 
+					font-weight: 800; 
+					color: #1a2c3e;
+					font-size: 1.5rem; 
+					text-decoration: none;
+				}
+				
+				.dropdown { 
+					position: relative; 
+					width: 240px;
+					/*999 layers*/
+					z-index: 999;
+				}
+				
+				/*Neumorphism button*/
+				.select-btn {
+					display: flex; 
+					height: 48px;
+					background: #e0e5ec;
+					padding: 0 15px; 
+					font-size: 14px;
+					font-weight: 600;
+					color: #2c3e50;
+					border-radius: 12px; 
+					align-items: center;
+					justify-content: space-between;
+					cursor: pointer; 
+					box-shadow: 4px 4px 8px #babecc,
+					-4px -4px 8px #fff;
+					transition: 0.3s;
+				}
+				.select-btn:hover {
+					box-shadow: inset 2px 2px 5px #babecc, 
+					inset -2px -2px 5px #fff; 
+				}
+				.dropdown.active .select-btn i { transform: rotate(-180deg); }
+				.dropdown-menu {
+					position: absolute;
+					top: calc(100% + 8px); 
+					left: 0; width: 100%;
+					background: #e0e5ec;
+					border-radius: 14px; 
+					padding: 6px;
+					list-style: none; 
+					display: none; 
+					flex-direction: column; 
+					gap: 4px;
+					box-shadow: 6px 6px 15px #babecc,
+					-6px -6px 15px #fff;
+				}
+				.dropdown.active .dropdown-menu {
+					display: flex; 
+				}
+				.dropdown-menu li { 
+					display: flex;
+					align-items: center;
+					padding: 10px 12px; 
+					color: #555;
+					border-radius: 8px; 
+					cursor: pointer; 
+					transition: all 0.2s;
+				}
+				.dropdown-menu li:hover {
+					background: #babecc;
+					color: #1a2c3e;
+					transform: translateX(4px); 
+				}
+				.menu-icon {
+					display: flex;
+					align-items: center;
+					margin-right: 10px;
+				}
+				.menu-icon svg {
+					width: 18px;
+					height: 18px; 
+					stroke: currentColor; 
+					stroke-width: 2; 
+				}
+				.menu-text {
+					font-size: 13.5px;
+					font-weight: 500;
+				}
+
+				.main-container { 
+					max-width: 1200px; 
+					margin: 30px auto;
+					padding: 0 20px;
+				}
+				.hero-card { 
+					background: #e0e5ec;
+					border-radius: 28px;
+					padding: 45px; 
+					box-shadow: 9px 9px 16px #babecc, 
+					-9px -9px 16px #fff;
+				}
+				.video-box-wrapper { 
+					background: #e0e5ec;
+					padding: 15px; 
+					border-radius: 20px;
+					box-shadow: inset 4px 4px 8px #babecc, 
+					inset -4px -4px 8px #fff; 
+				}
+				.video-box-wrapper video {
+					border-radius: 12px; 
+					width: 100%;
+					display: block; 
+				}
+
+				.cta-btn {
+					background: #e0e5ec;
+					color: #1a2c3e; 
+					font-weight: 700;
+					padding: 12px 28px; 
+					border: none;
+					
+					border-radius: 30px;
+					box-shadow: 4px 4px 8px #babecc,
+					-4px -4px 8px #fff;
+					transition: all 0.2s;
+				}
+				.cta-btn:hover {
+					box-shadow: inset 2px 2px 5px #babecc, 
+					inset -2px -2px 5px #fff;
+					color: #2a5298;
+				}
+			</style>
+		</head>
+		<body>
+			
+			<div id="splash-screen">
+				<div class="splash-logo">EduStream</div>
+				<div class="spinner-custom"></div>
+				
+				<p style="margin-top: 15px; color: #7f8c8d; font-size: 14px;">Assembling Your Workspace...</p>
+			</div>
+
+			<header class="top-header">
+				<a href="index.html" class="logo-text"><strong>📚 EduStream</strong></a>
+				
+				<div class="dropdown" id="appDropdown">
+					<div class="select-btn">
+						<span class="select-btn-text" id="headerUserDisplay"><i class="bx bx-user"></i> Loading...</span>
+						<i class="bx bx-chevron-down"></i>
+					</div>
+					
+					<ul class="dropdown-menu">
+						
+						<li onclick="launchModalContext('Feedback')">
+							<span class="menu-icon"><i class="bx bx-star"></i></span>
+							<span class="menu-text">Feedback</span>
+						</li>
+
+						<li onclick="launchModalContext('Help')">
+							<span class="menu-icon"><i class="bx bx-help-circle"></i></span>
+							<span class="menu-text">Help Desk</span>
+						</li>
+
+						<li onclick="launchModalContext('FAQ')">
+							<span class="menu-icon"><i class="bx bx-info-circle"></i></span>
+							<span class="menu-text">FAQ</span>
+						</li>
+
+						<li onclick="launchModalContext('Contact')">
+							<span class="menu-icon"><i class="bx bx-envelope"></i></span>
+							<span class="menu-text">Contact</span>
+						</li>
+						
+						<li onclick="location.href='dashboard.html'">
+							<span class="menu-icon">
+							<!-- 2*2 box icon --!>
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+									<rect x="3" y="3" width="7" height="7" rx="1" />
+									<rect x="14" y="3" width="7" height="7" rx="1" />
+									<rect x="3" y="14" width="7" height="7" rx="1" />
+									<rect x="14" y="14" width="7" height="7" rx="1" />
+								</svg>
+							</span>
+							<span class="menu-text">Dashboard</span>
+						</li>
+
+						<li onclick="logoutAction()">
+							<span class="menu-icon">
+								<!-- logout icon --!>
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+									<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+									<polyline points="16 17 21 12 16 7"/>
+									<line x1="21" y1="12" x2="9" y2="12"/>
+								</svg>
+							</span>
+							<span class="menu-text">Logout</span>
+						</li>
+					</ul>
+				</div>
+			</header>
+			
+			<main class="main-container">
+				<div class="hero-card row align-items-center mb-5">
+					<div class="col-lg-7 pe-lg-5">
+						<h1 class="display-5 fw-bold mb-3" style="color: #1a2c3e; font-weight: 800;">Unlock Multi-Disciplinary Competencies</h1>
+						<p class="lead mb-4" style="font-size: 1.05rem; line-height: 1.8; color: #555;">
+							Welcome to the next-generation virtual learning center. Experience architectural fluid interfaces optimized for rigorous computer science tracks, modern engineering, structural design, and business management.
+						</p>
+						<button class="cta-btn" onclick="location.href='courses.html'">Explore Curriculum Matrix →</button>
+					</div>
+					
+					<!--====video====--!>
+					<div class="col-lg-5 mt-4 mt-lg-0">
+						<div class="video-box-wrapper">
+							<video controls muted autoplay loop>
+								<source src="mov_bbb.mp4" type="video/mp4">
+							</video>
+						</div>
+						<p class="text-center text-muted small mt-2">🎬 Platform Overview & Onboarding Tour</p>
+					</div>
+				</div>
+				
+					<!---- start Introduction courses----!>
+					<h3 class="fw-bold mb-4 text-dark"><i class="bx bx-grid-alt text-primary"></i> Explore Global Academic Disciplines</h3>
+				
+				<section class="row g-4 mb-4">
+						<div class="col-md-4">
+							<article class="nm-card h-100">
+								<div class="d-flex align-items-center gap-2 mb-3">
+									<i class="bx bx-code-block text-primary fs-3"></i>
+									<h5 class="fw-bold m-0 text-dark">Computer Science: Algorithm Design</h5>
+								</div>
+								<p class="small text-muted mb-0" style="line-height: 1.6;">
+									Analyze computational complexity, discrete algorithmic data objects, execution time optimization, and logical recursive processing methods.
+								</p>
+							</article>
+						</div>
+						<div class="col-md-4">
+							<article class="nm-card h-100">
+								<div class="d-flex align-items-center gap-2 mb-3">
+									<i class="bx bx-cloud-upload text-success fs-3"></i>
+									<h5 class="fw-bold m-0 text-dark">Information Technology: Systems</h5>
+								</div>
+								<p class="small text-muted mb-0" style="line-height: 1.6;">
+									Examine client-server transmission architecture, logic gate structures, database relational interfaces, and systemic cloud protocols.
+								</p>
+							</article>
+						</div>
+						<div class="col-md-4">
+							<article class="nm-card h-100">
+								<div class="d-flex align-items-center gap-2 mb-3">
+									<i class="bx bx-home-alt text-warning fs-3"></i>
+									<h5 class="fw-bold m-0 text-dark">Structural Engineering & Building</h5>
+								</div>
+								<p class="small text-muted mb-0" style="line-height: 1.6;">
+									Study concrete industrial material physics, blueprint asset production matrices, building mechanics, and modular construction pipelines.
+								</p>
+							</article>
+						</div>
+						<div class="col-md-4">
+							<article class="nm-card h-100">
+								<div class="d-flex align-items-center gap-2 mb-3">
+									<i class="bx bx-line-chart text-danger fs-3"></i>
+									<h5 class="fw-bold m-0 text-dark">Business: Operational Strategy</h5>
+								</div>
+								<p class="small text-muted mb-0" style="line-height: 1.6;">
+									Convert raw company data metrics into tactical corporate execution pipelines, financial analysis, and strategic risk assessment maps.
+								</p>
+							</article>
+						</div>
+						<div class="col-md-4">
+							<article class="nm-card h-100">
+								<div class="d-flex align-items-center gap-2 mb-3">
+									<i class="bx bx-wrench text-info fs-3"></i>
+									<h5 class="fw-bold m-0 text-dark">Mechanical & Systems Integration</h5>
+								</div>
+								<p class="small text-muted mb-0" style="line-height: 1.6;">
+									Build interactive mechanical simulations, dynamic automated control loops, and analyze low-level processing hardware metrics.
+								</p>
+							</article>
+						</div>
+						<div class="col-md-4">
+							<article class="nm-card h-100">
+								<div class="d-flex align-items-center gap-2 mb-3">
+									<i class="bx bx-paint text-secondary fs-3"></i>
+									<h5 class="fw-bold m-0 text-dark">Multimedia & Internet Graphics</h5>
+								</div>
+								<p class="small text-muted mb-0" style="line-height: 1.6;">
+									Synthesize vector objects, digital compression assets, interface layouts, and reactive web layout tracking scripts.
+								</p>
+							</article>
+						</div>
+				</section>
+			</main>
+
+				<div class="modal-mask" id="helpModalWrapper">
+					<section class="modal-box">
+						
+						<!-- bug ? --!>
+						<h4 class="fw-bold text-dark mb-3" id="modalHeading">Component!!!!!!!!!!! Hub</h4>
+						<div id="universalModalDescription" class="small text-muted mb-4" style="line-height: 1.6; display: none;"></div>
+						<button class="nm-btn nm-btn-primary w-100" onclick="document.getElementById('helpModalWrapper').style.display='none'">Close Panel</button>
+					</section>
+				</div>
+			
+			<div id="universalModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(3px); justify-content: center; align-items: center; z-index: 1050;">
+				<div class="nm-card" style="width: 90%; max-width: 500px; padding: 30px; position: relative; box-shadow: 10px 10px 20px #babecc, -10px -10px 20px #fff; border-radius: 20px;">
+					<h4 class="fw-bold text-dark mb-3" id="modalHeading">Request</h4>
+					
+					<div id="zone_Feedback" style="display: none;">
+						<p class="small text-muted mb-2">Rate your experience:</p>
+						<div class="star-rating mb-3" style="font-size: 1.8rem; color: #ccc; cursor: pointer; display: flex; gap: 5px;">
+							<i class="bx bx-star star-item" data-value="1"></i>
+							<i class="bx bx-star star-item" data-value="2"></i>
+							<i class="bx bx-star star-item" data-value="3"></i>
+							<i class="bx bx-star star-item" data-value="4"></i>
+							<i class="bx bx-star star-item" data-value="5"></i>
+						</div>
+						<textarea class="essay-input" id="feedbackReviewText" placeholder="Detailed review..." style="height: 100px;"></textarea>
+					</div>
+
+					<div id="modalDescription" class="small text-muted mb-4" style="line-height: 1.6;"></div>
+						
+						<div id="zone_Help" style="display:none;">
+							<textarea id="helpText"
+								placeholder="Describe your issue..."
+								style="width:100%; height:120px; padding:10px; border-radius:10px; border:1px solid #ccc;">
+							</textarea>
+						</div>
+						
+					<div class="d-flex justify-content-end gap-2">
+						<button class="cta-btn" onclick="document.getElementById('universalModal').style.display='none'">Cancel</button>
+						<button class="cta-btn text-white" id="modalSubmitBtn" onclick="handleModalSubmit()" style="background: #1e3c72;">Send</button>
+					</div>
+				</div>
+			</div>
+			
+			<!--button on bellow,simulate like Ghost.button--!>
+			<nav class="bottom-navbar">
+				<ul class="nav-menu">
+					<li><a href="index.html" class="nav-link active">Home</a></li>
+					<li><a href="courses.html" class="nav-link">Courses</a></li>
+					<li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+					<li><a href="exam.html" class="nav-link">Exam/Quiz</a></li>
+				</ul>
+			</nav>
+			
+			<script>
+			 //check login
+				window.addEventListener('DOMContentLoaded', () => {
+					let activeUser = localStorage.getItem('savedProfileName');
+					//if not login
+					if (!activeUser) {
+						alert("Security Gateway: Unauthorized state detected. Directing to account portal.");
+						window.location.href = "login.html";
+						return;
+					}
+					//show modal on above
+					document.getElementById('headerUserDisplay').innerHTML = `<i class="bx bx-user-circle"></i> Hi, ${activeUser}`;
+
+					setTimeout(() => {
+						const splash = document.getElementById('splash-screen');
+						if(splash) {
+							splash.style.opacity = '0'; 
+							splash.style.visibility = 'hidden';
+						}
+					}, 1500);
+				});
+				 //function logout
+				function logoutAction() {
+					localStorage.removeItem('savedProfileName');
+					window.location.href = 'login.html';
+				}
+				//dropdown
+				const dropdown = document.getElementById('appDropdown');
+				const selectBtn = dropdown.querySelector('.select-btn');
+				selectBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
+				document.addEventListener('click', () => dropdown.classList.remove('active'));
+
+				let currentRating = 0;
+				let currentType = '';
+					
+					// control dropdown function
+					function launchModalContext(type) {
+						//DOM
+						const modal = document.getElementById('universalModal');
+						const heading = document.getElementById('modalHeading');
+						const desc = document.getElementById('modalDescription');
+						const fZone = document.getElementById('zone_Feedback');
+						
+						modal.style.display = 'flex';   
+						modal.style.visibility = 'visible';
+						modal.style.opacity = '1';
+						
+						currentType = type;
+						
+						// reset display
+						fZone.style.display = 'none';
+						desc.style.display = 'none';
+						document.getElementById('zone_Help').style.display = 'none';
+						
+						if (type === 'Feedback') {
+							heading.textContent = "Feedback Engine";
+							fZone.style.display = 'block';
+							desc.style.display = 'none';
+						
+						} else if (type === 'Help') {
+							heading.textContent = "Help Desk";
+						
+							desc.style.display = 'none';
+							document.getElementById('zone_Help').style.display = 'block';
+						} else if (type === 'FAQ') {
+							heading.textContent = "FAQ";
+						
+							// close all
+							fZone.style.display = 'none';
+							document.getElementById('zone_Help').style.display = 'none';
+						
+							// desc
+							desc.style.display = 'block';
+							desc.style.visibility = 'visible';
+							desc.innerHTML = `
+								<p><b>Q:</b> How do I reset my progress?<br>
+								<b>A:</b> Logout or clear cache.</p>
+								
+								<hr>
+								
+								<p><b>Q:</b> How do I contact support?<br>
+								<b>A:</b> Use Contact menu.</p>
+								
+								<hr>
+								
+								<p><b>Q:</b> Why can't I login?<br>
+								<b>A:</b> Check username/password.</p>
+							`;
+						} else if (type === 'Contact') {
+							heading.textContent = "Contact";
+							desc.style.display = 'block';
+							desc.innerHTML = "Email: support@edustream.com";
+						}
+					}
+					
+					
+					document.querySelectorAll('.star-item').forEach(star => {
+						star.addEventListener('click', function() {
+							currentRating = parseInt(this.getAttribute('data-value'));
+							document.querySelectorAll('.star-item').forEach((s, idx) => {
+								s.className = idx < currentRating ? 'bx bxs-star star-item' : 'bx bx-star star-item';
+								s.style.color = idx < currentRating ? '#f1c40f' : '#ccc';
+							});
+						});
+					});
+				//front end modal 
+				function handleModalSubmit() {
+					
+					if (currentType === 'Feedback' && currentRating === 0)
+						return alert("Select a rating!");
+					
+					if (currentType === 'Help') {
+							const msg = document.getElementById('helpText').value;
+						if (!msg.trim()) return alert("Please describe your issue!");
+						alert("Help request sent: " + msg);
+					}
+					
+					alert("Data packet submitted successfully!");
+					document.getElementById('universalModal').style.display = 'none';
+				}
+			</script>
+		</body>
+	</html>

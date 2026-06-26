@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>Assessment Center</title>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+			<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+			<link rel="stylesheet" href="style.css">
+			<style>
+				body {
+					background: #e0e5ec; 
+					color: #555; 
+				}
+				/* place white on bottom */
+				.main-container {
+					max-width: 850px;
+					margin: 30px auto;
+					padding: 0 15px 140px;
+				} 
+				
+				.nm-card {
+					background: #e0e5ec;
+					border-radius: 20px;
+					padding: 25px; 
+					margin-bottom: 25px; 
+					box-shadow: 6px 6px 12px #babecc,
+					-6px -6px 12px #fff; 
+				}
+				.nav-btn {
+					background: #e0e5ec;
+					border: none;
+					padding: 10px 18px; 
+					border-radius: 12px; 
+					font-weight: 600; 
+					color: #555; 
+					box-shadow: 3px 3px 6px #babecc, 
+					-3px -3px 6px #fff;
+					margin-right: 8px; 
+					transition: 0.2s;
+				}
+				.nav-btn.active {
+					box-shadow: inset 3px 3px 6px #babecc,
+					inset -3px -3px 6px #fff; 
+					color: #2a5298; 
+					font-weight: 700;
+				}
+				.opt-label {
+					display: flex;
+					align-items: center;
+					padding: 10px 15px;
+					margin-bottom: 8px;
+					background: #e0e5ec;
+					border-radius: 10px;
+					cursor: pointer;
+					box-shadow: 2px 2px 5px #babecc,
+					-2px -2px 5px #fff;		
+				}
+				.essay-input { 
+					width: 100%;
+					height: 90px;
+					background: #e0e5ec;
+					border: none;
+					border-radius: 10px; 
+					padding: 12px;
+					box-shadow: inset 3px 3px 6px #babecc,
+					inset -3px -3px 6px #fff;
+					outline: none; 
+					resize: none;
+				}
+				
+				/* code block background */
+				.code-box { 
+					font-family: 'Courier New', Courier, monospace;
+					background: #1e1e1e;
+					color: #f8f8f2;
+					padding: 15px;
+					border-radius: 12px; 
+					font-size: 0.8rem; 
+					line-height: 1.4; 
+					margin-top: 10px; 
+					text-align: left; 
+					overflow-x: auto; 
+					box-shadow: inset 3px 3px 8px #000; white-space: pre;
+				}
+				
+				/*  layout the footer */
+				.site-footer { 
+					text-align: center; 
+					margin-top: 40px; 
+					padding-bottom: 20px;
+				}
+				.footer-links { 
+					display: flex; 
+					justify-content: center;
+					gap: 15px; 
+					list-style: none; 
+					padding: 0;
+					margin-top: 10px; 
+				}
+				.footer-links a {
+					color: #555; 
+					text-decoration: none;
+					font-size: 0.9rem;
+					font-weight: 600;
+					transition: 0.2s;
+				}
+				.footer-links a:hover { color: #1e3c72; }
+			</style>
+		</head>
+		<body>
+			<main class="main-container">
+				<div class="nm-card text-center">
+					<h3 class="fw-bold text-dark"><i class="bx bx-certification"></i> Assessment Hub</h3>
+				</div>
+				<!-- show code --!>
+				<div class="row g-3 mb-4">
+					<div class="col-md-6 text-center"><div class="nm-card p-3"><h5>Lab Hub</h5><<button class="nav-btn w-100 my-1" onclick="runTool('lab')">Execute Lab Token</button><div class="code-box" id="labLog">Standby... </div></div></div>
+					<div class="col-md-6 text-center"><div class="nm-card p-3"><h5>Dice Engine</h5><button class="nav-btn w-100 my-1" onclick="runTool('dice')"> Roll Dice</button><div class="code-box" id="diceLog">Standby... </div></div></div>
+				</div>
+				
+				<div class="mb-4" id="topControlPanel">
+					<button class="nav-btn active" onclick="switchTab('quiz1', this)">Quiz 1</button>
+					<button class="nav-btn" onclick="switchTab('quiz2', this)">Quiz 2</button>
+					<button class="nav-btn text-warning" onclick="switchTab('exam', this)"><i class="bx bx-git-repo-forked"></i> Final Exam</button>
+				</div>
+				
+				<form id="assessmentForm">
+					<div id="questionContainer"></div>
+					<button type="submit" class="btn w-100 py-3 rounded-3 fw-bold text-white shadow mt-2" style="background-color: #1e3c72;">Submit My Answers</button>
+				</form>
+				
+				<div id="resultBox" class="nm-card text-center" style="display:none;">
+					<h4><i class="bx bx-check-double"></i> Evaluation Complete!</h4>
+					<div class="display-4 fw-bold text-primary my-3" id="scoreTarget">0 / 100</div>
+					<p id="feedback" class="fw-bold text-secondary"></p>
+					<button onclick="location.reload()" class="nav-btn mt-2">Retake Track</button>
+				</div>
+
+			</main>
+			
+			<nav class="bottom-navbar">
+				<ul class="nav-menu">
+					<li><a href="index.html" class="nav-link">Home</a></li>
+					<li><a href="courses.html" class="nav-link">Courses</a></li>
+					<li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+					<li><a href="exam.html" class="nav-link active">Exam/Quiz</a></li>
+				</ul>
+			</nav>
+			<!-- modal --!>
+			<div id="universalModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); justify-content: center; align-items: center; z-index: 1050;">
+				<div class="nm-card" style="width: 90%; max-width: 500px; text-align: center;">
+					<h4 class="fw-bold text-dark mb-3" id="modalHeading">Notification</h4>
+					<div id="modalDescription" class="small text-muted mb-4" style="line-height: 1.6; text-align: left;"></div>
+					<button class="nav-btn w-100" onclick="document.getElementById('universalModal').style.display='none'">Close Panel</button>
+				</div>
+			</div>
+
+			<script>
+				
+				// Quiz / Exam Data Structure
+				const quizData = {
+					quiz1: [
+						{ q: "Q1. Which architecture incorporates a common shared memory bus?", o: ["A) Harvard Architecture", "B) Von Neumann Framework", "C) Decoupled Cache"] },
+						{ q: "Q2. What denotes data given structured administrative meaning?", o: ["A) Pure Information Assets", "B) Unstructured Metadata"] },
+						{ q: "Q3. Does RISC focus on keeping instructions complex or simple?", o: ["A) Highly Complex Instructions", "B) Reduced Simple Instruction Set"] },
+						{ q: "Q4. Which storage entity is inside the CPU for instant manipulation?", o: ["A) Internal CPU Registers", "B) Secondary Storage Drives"] },
+						{ q: "Q5. Strategic executive levels map directly to what?", o: ["A) Long-Range Strategic Planning", "B) Hourly Operating Log Schedules"] }
+					],
+					quiz2: [
+						{ q: "Q1. Harvard design isolates which processing segments?", o: ["A) Separate Data & Instructions", "B) Combined Storage Space"] },
+						{ q: "Q2. Knowledge level structures incorporate what system aspect?", o: ["A) Actionable Expertise and Rules", "B) Raw Binary Digits Streams"] },
+						{ q: "Q3. Which component performs arithmetic actions?", o: ["A) Arithmetic Logic Unit (ALU)", "B) Program Counter (PC)"] },
+						{ q: "Q4. What is the fastest level in the memory hierarchy?", o: ["A) High-Speed Cache Memories", "B) Magnetic Tape Systems"] },
+						{ q: "Q5. Tactical mid-management requires what metrics?", o: ["A) Monthly Summaries & Comparisons", "B) Immediate Raw Transaction Audits"] }
+					],
+					exam: [
+						{ id: "1a", q: "Question 1(a). Deconstruct Von Neumann bottleneck vs Harvard pipelines. (25 Marks)" },
+						{ id: "1b", q: "Question 1(b). Analyze hardware constraints and layout formats of ARM RISC. (25 Marks)" },
+						{ id: "2a", q: "Question 2(a). Evaluate DIKW Framework inside enterprise systems. (25 Marks)" },
+						{ id: "2b", q: "Question 2(b). Differentiate demands between Strategic, Tactical, and Operational tiers. (25 Marks)" }
+					]
+				};
+				
+				// Current State
+				let currentTab = 'quiz1';
+				// Page Initialization
+				window.addEventListener('DOMContentLoaded', () => {
+					if(!localStorage.getItem('savedProfileName')) { alert("Unauthorized!"); window.location.href="login.html"; return; }
+					renderTab('quiz1');
+				});
+				
+				// Render Questions
+				function renderTab(tabId) {
+					const container = document.getElementById('questionContainer');
+					container.innerHTML = '';
+					if (tabId.startsWith('quiz')) {
+						quizData[tabId].forEach((item, index) => {
+							
+							// show 2 radio button
+							let opts = item.o.map(opt => `<label class="opt-label"><input type="radio" name="q_${index}" value="${opt[0]}" class="me-2" required> <span>${opt}</span></label>`).join('');
+							// insert ques card
+							container.innerHTML += `<div class="nm-card"><div class="fw-bold mb-3 text-dark">${item.q}</div>${opts}</div>`;
+						});
+					} else {
+						
+						quizData.exam.forEach(item => {
+							container.innerHTML += `<div class="nm-card"><span class="badge bg-secondary float-end">25 Marks</span><div class="fw-bold mb-3 text-dark">${item.q}</div><textarea class="essay-input" id="exam_${item.id}" required placeholder="Type analysis here..."></textarea></div>`;
+						});
+					}
+				}
+				//switch tab
+				function switchTab(tabId, btn) {
+					//clear all active
+					document.querySelectorAll('#topControlPanel .nav-btn').forEach(b => b.classList.remove('active'));
+					btn.classList.add('active');
+					currentTab = tabId;
+					renderTab(tabId);
+				}
+				
+			  // code (Lab + Dice)
+				function runTool(type) {
+					
+					let time = new Date().toLocaleTimeString();
+					
+					if(type === 'lab') {
+						
+						document.getElementById('labLog').innerHTML =
+							`[${time}]
+							Code: ACC-HUB-${Math.floor(Math.random()*9000+1000)}
+							Accuracy: ${(Math.random()*15+85).toFixed(2)}%
+							VALID`;
+
+					}
+
+					if(type === 'dice') {
+
+						document.getElementById('diceLog').innerHTML =
+							`[${time}]
+								Dice Seed: [${Math.floor(Math.random()*6)+1}]
+								Accuracy: ${(Math.random()*5+90).toFixed(1)}%
+								STABLE`;
+					}
+				}
+				// Form Submission + Scoring
+				document.getElementById('assessmentForm').addEventListener('submit', function(e) {
+					e.preventDefault();
+					let score = 0, feedback = "";
+					if (currentTab.startsWith('quiz')) {
+						document.querySelectorAll('#questionContainer .nm-card').forEach((card, idx) => {
+							let checked = card.querySelector('input[type="radio"]:checked');
+							if(checked && (checked.value === 'A' || (currentTab==='quiz1' && idx===0 && checked.value==='B'))) score += 20;
+						});
+						feedback = score >= 60 ? "Excellent progress!" : "Revision recommended.";
+					} else {
+						 // essay scoring
+						['1a','1b','2a','2b'].forEach(id => { if(document.getElementById(`exam_${id}`).value.trim().length > 10) score += 25; });
+						feedback = `<strong>Marks Breakdown:</strong> 1(a): 25/25, 1(b): 25/25, 2(a): 25/25, 2(b): 25/25.<br>Academic Board Verified.`;
+					}
+					//show result
+					document.getElementById('scoreTarget').textContent = `${score} / 100`;
+					document.getElementById('feedback').innerHTML = feedback;
+					//hide page exam
+					document.getElementById('assessmentForm').style.display = 'none';
+					document.getElementById('topControlPanel').style.display = 'none'; 
+					document.getElementById('resultBox').style.display = 'block';
+					//scrool up
+					window.scrollTo({ top: 0, behavior: 'smooth' });
+				});
+			</script>
+		</body>
+	</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>Secure Checkout - Intelligent Learning Platform</title>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+			<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+			<link rel="stylesheet" href="style.css">
+			<style>
+				body { 
+					min-height: 100vh; 
+					display: flex; 
+					flex-direction: column; 
+					justify-content: center; 
+				}
+				.main-container { 
+					max-width: 600px; 
+					width: 100%;
+					margin: 40px auto;
+					padding: 0 20px;
+				}
+				.payment-card {
+					background: #e0e5ec;
+					border-radius: 24px;
+					padding: 35px;
+					box-shadow: 9px 9px 16px #babecc,
+					-9px -9px 16px #fff;
+				}
+				.payment-header { 
+					text-align: center;
+					margin-bottom: 30px;
+				}
+				.payment-header i {
+					font-size: 3rem;
+					color: #2a5298;
+					margin-bottom: 10px;
+				}
+				.payment-header h2 {
+					font-weight: 800; 
+					color: #1a2c3e; 
+				}
+				.price-tag { 
+					text-align: center;
+					padding: 15px;
+					border-radius: 15px; 
+					background: #e0e5ec;
+					box-shadow: inset 3px 3px 6px #babecc, 
+					inset -3px -3px 6px #fff; 
+					margin-bottom: 30px;
+					font-weight: 700; 
+					font-size: 1.2rem;
+					color: #2a5298; 
+				}
+					label {
+					font-weight: 600;
+					font-size: 0.9rem;
+					color: #1a2c3e;
+					margin-bottom: 8px;
+					display: block;
+				}
+				.input-group-custom { 
+					position: relative; 
+					margin-bottom: 20px; 
+				}
+				.input-group-custom i {
+					position: absolute; 
+					left: 15px; 
+					top: 13px;
+					font-size: 1.2rem;
+					color: #7f8c8d;
+				}
+				input.form-field { 
+					width: 100%; 
+					padding: 12px 12px 12px 45px;
+					background: #e0e5ec; 
+					border: none; 
+					border-radius: 12px;
+					box-shadow: inset 3px 3px 6px #babecc,
+					inset -3px -3px 6px #fff; 
+					color: #2c3e50; 
+					font-weight: 500;
+					outline: none; 
+				}
+				input.form-field:focus {
+					box-shadow: inset 2px 2px 4px #babecc,
+					inset -2px -2px 4px #fff; 
+				}
+				input.form-field.is-invalid {
+					box-shadow: inset 3px 3px 6px 
+					rgba(231, 76, 60, 0.2),
+					inset -3px -3px 6px #fff;
+					border: 1px solid #e74c3c;
+				}
+				.error-message {
+					color: #e74c3c;
+					font-size: 0.8rem;
+					font-weight: 600;
+					margin-top: 5px;
+					display: none; 
+				}
+				.pay-submit-btn {
+					width: 100%; 
+					background: #2a5298; 
+					color: white;
+					border: none;
+					padding: 14px; 
+					border-radius: 12px; 
+					font-weight: 700; 
+					font-size: 1rem; 
+					cursor: pointer;
+					box-shadow: 4px 4px 8px #babecc,
+					-4px -4px 8px #fff;
+					margin-top: 15px;
+				}
+				.pay-submit-btn:hover { 
+					background: #1e3c72;
+				}
+				.security-footer { 
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					gap: 8px;
+					margin-top: 25px;
+					font-size: 0.8rem;
+					color: #7f8c8d; 
+				}
+			</style>
+		</head>
+		<body>
+
+			<main class="main-container">
+				<div class="payment-card">
+					<div class="payment-header"><i class="bx bx-shield-quarter"></i><h2>Secure Checkout</h2></div>
+					<div class="price-tag"><span style="font-weight:500; color:#555;">Premium Access Plan Bundle:</span> $199.00 USD</div>
+
+					<form id="checkoutForm" novalidate>
+						<div class="mb-3">
+							<label for="cardName">Cardholder Name</label>
+							<div class="input-group-custom"><i class="bx bx-user"></i><input type="text" id="cardName" class="form-field" placeholder="Loading user..." required></div>
+						</div>
+						<div class="mb-3">
+							<label for="cardNumber">Credit Card Number</label>
+							<div class="input-group-custom"><i class="bx bx-credit-card"></i><input type="text" id="cardNumber" class="form-field" placeholder="1234567812345678" maxlength="16" required></div>
+							<div id="cardNumError" class="error-message">Card number must be exactly 16 pure digits.</div>
+						</div>
+						<div class="row">
+							<div class="col-6">
+								<div class="mb-3">
+									<label for="cardExpiry">Expiration Date</label>
+									<div class="input-group-custom"><i class="bx bx-calendar"></i><input type="text" id="cardExpiry" class="form-field" placeholder="MM/YY" maxlength="5" required></div>
+									<div id="expiryError" class="error-message">Use valid MM/YY format.</div>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="mb-3">
+									<label for="cardCvv">CVV Code</label>
+									<div class="input-group-custom"><i class="bx bx-lock-open"></i><input type="text" id="cardCvv" class="form-field" placeholder="123" maxlength="3" required></div>
+									<div id="cvvError" class="error-message">Must be 3 digits.</div>
+								</div>
+							</div>
+						</div>
+							<button type="submit" class="pay-submit-btn">Authorize Payment Securely</button>
+					</form>
+					
+					<div class="security-footer"><i class="bx bxs-lock-alt" style="color:#2ecc71;"></i><span>Safety Guardian by Viva</span></div>
+				</div>
+			</main>
+
+			<nav class="bottom-navbar">
+				<ul class="nav-menu">
+					<li><a href="index.html" class="nav-link">Home</a></li>
+					<li><a href="courses.html" class="nav-link">Courses</a></li>
+					<li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+					<li><a href="exam.html" class="nav-link">Exam/Quiz</a></li>
+				</ul>
+			</nav>
+
+			<script>
+				// control and read data
+				window.addEventListener('DOMContentLoaded', () => {
+					let activeUser = localStorage.getItem('savedProfileName');
+					
+					// secure  id didt cacth will block
+					if (!activeUser) {
+						alert("Security Gateway: Unauthorized payment attempt detected. Directing to account portal.");
+						window.location.href = "login.html";
+						return;
+					}
+					
+					// 继承id,use name in localStorage
+					document.getElementById('cardName').value = activeUser;
+				});
+				
+				document.getElementById('checkoutForm').addEventListener('submit', function(event) {
+					event.preventDefault();
+					let isFormValid = true;
+					const cardName = document.getElementById('cardName');
+					const cardNumber = document.getElementById('cardNumber');
+					const cardExpiry = document.getElementById('cardExpiry');
+					const cardCvv = document.getElementById('cardCvv');
+					/*regex reques*/
+					const digitPattern = /^\d+$/;
+					const expiryPattern = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
+					
+					if (cardName.value.trim() === "") { cardName.classList.add('is-invalid'); isFormValid = false; } 
+					else { cardName.classList.remove('is-invalid'); }
+					
+					//16 digits
+					if (cardNumber.value.length !== 16 || !digitPattern.test(cardNumber.value)) {
+						cardNumber.classList.add('is-invalid'); document.getElementById('cardNumError').style.display = 'block'; isFormValid = false;
+					} else { cardNumber.classList.remove('is-invalid'); document.getElementById('cardNumError').style.display = 'none'; }
+					
+					if (!expiryPattern.test(cardExpiry.value)) {
+						cardExpiry.classList.add('is-invalid'); document.getElementById('expiryError').style.display = 'block'; isFormValid = false;
+					} else { cardExpiry.classList.remove('is-invalid'); document.getElementById('expiryError').style.display = 'none'; }
+					
+					//3 digits
+					if (cardCvv.value.length !== 3 || !digitPattern.test(cardCvv.value)) {
+						cardCvv.classList.add('is-invalid'); document.getElementById('cvvError').style.display = 'block'; isFormValid = false;
+					} else { cardCvv.classList.remove('is-invalid'); document.getElementById('cvvError').style.display = 'none'; }
+					
+					if (isFormValid) {
+						// if succes record in storage
+						localStorage.setItem('hasPurchasedPremium', 'true');
+						alert("Transaction Authorized Successfully!");
+						window.location.href = "dashboard.html";
+					}
+				});
+			</script>
+		</body>
+	</html>

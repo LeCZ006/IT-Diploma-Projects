@@ -1,0 +1,209 @@
+/*=== Global Core Resets ===*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #e0e5ec;
+    font-family: "Inter", system-ui, sans-serif;
+    color: #2c3e50;
+    overflow-x: hidden;
+    padding-bottom: 120px; /* let the bar some space */
+}
+
+/* === Navbar === */
+.bottom-navbar {
+    background: #e0e5ec; 
+    padding: 0.9rem 1.2rem; 
+    border-radius: 60px;
+    box-shadow: 9px 9px 16px #babecc, -9px -9px 16px #fff;
+    position: fixed; 
+    bottom: 20px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    z-index: 9998;
+    width: max-content;
+}
+
+.nav-menu { 
+    display: flex; 
+    gap: 1rem; 
+    list-style: none; 
+    margin: 0; 
+    padding: 0; 
+}
+
+.nav-link {
+    text-decoration: none; 
+    padding: 0.6rem 1.2rem; 
+    border-radius: 40px;
+    background: #e0e5ec; 
+    color: #2c3e50; 
+    font-weight: bold; 
+    font-size: 0.85rem;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #fff;
+    transition: color 0.2s, box-shadow 0.2s;
+}
+
+.nav-link:hover {
+    color: #2a5298;
+}
+
+.nav-link.active {
+    box-shadow: inset 4px 4px 8px #babecc, inset -4px -4px 8px #fff;
+    color: #2a5298;
+}
+
+/* === Universal Responsive Footer === */
+.site-footer {
+    margin-top: 60px;
+    padding: 30px 20px;
+	/*Design Consistency*/
+    background: #e0e5ec;
+    text-align: center;
+    border-radius: 20px 20px 0 0;
+    box-shadow: inset 0 9px 16px #babecc, inset 0 -9px 16px #fff;
+}
+
+/* === UI Component Blocks === */
+.nm-card {
+    background: #e0e5ec;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 9px 9px 16px #babecc, -9px -9px 16px #fff;
+}
+
+.nm-input {
+    background: #e0e5ec;
+    border: none;
+    border-radius: 12px;
+    box-shadow: inset 3px 3px 6px #babecc, inset -3px -3px 6px #fff;
+    padding: 12px 15px;
+    width: 100%;
+    outline: none;
+    color: #2c3e50;
+}
+
+.nm-input:focus {
+    box-shadow: inset 4px 4px 8px #a4a9b2, inset -4px -4px 8px #fff;
+}
+
+.nm-btn {
+    background: #e0e5ec;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    color: #2c3e50;
+    font-weight: bold;
+    box-shadow: 4px 4px 8px #babecc, -4px -4px 8px #fff;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.nm-btn:active {
+    box-shadow: inset 2px 2px 5px #babecc, inset -2px -2px 5px #fff;
+}
+
+.nm-btn-primary {
+    background: #2a5298;
+    color: #fff;
+}
+
+/* === Quiz Layout Elements === */
+.code-container {
+    background: #2c3e50;
+    color: #1abc9c;
+    padding: 15px;
+    border-radius: 10px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    text-align: left;
+    margin-top: 15px;
+    display: none;
+    overflow-x: auto;
+}
+
+.quiz-card {
+    background: #e0e5ec;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: inset 2px 2px 5px #babecc, inset -2px -2px 5px #fff;
+    margin-bottom: 20px;
+}
+
+.opt-box {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #e0e5ec;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 3px 3px 6px #babecc, -3px -3px 6px #fff;
+    cursor: pointer;
+}
+
+.opt-box input {
+    margin-right: 12px;
+}
+
+.star-box i {
+    font-size: 1.75rem;
+    color: #babecc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star-box i.selected {
+    color: #f1c40f;
+}
+
+/* === Custom Help Modal === */
+.modal-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-box {
+    background: #e0e5ec;
+    width: 90%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 9px 9px 16px #babecc, -9px -9px 16px #fff;
+}
+
+/* === Mobile Phone Optimization (Media Query) === */
+@media (max-width: 576px) {
+    body {
+        padding-bottom: 140px; 
+    }
+
+    .bottom-navbar {
+        width: 92% !important; 
+        padding: 0.6rem 0.8rem;
+        bottom: 15px;
+    }
+
+    .nav-menu {
+        gap: 0.3rem; 
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .nav-link {
+        padding: 0.5rem 0.7rem; 
+        font-size: 0.75rem; 
+    }
+}

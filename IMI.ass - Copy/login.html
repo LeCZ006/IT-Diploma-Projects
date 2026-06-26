@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta charset="UTF-8">
+			
+			<title>Login - Online Learning Platform</title>
+			
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+			<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+			<link rel="stylesheet" href="style.css">
+			
+			<style>
+				body { 
+					display: flex; 
+					justify-content: center; 
+					align-items: center; 
+					height: 100vh; 
+					padding-bottom: 0; 
+				}
+				
+				.container-box {
+					width: 420px; 
+				}
+				h2 { 
+					text-align: center;
+					margin-bottom: 10px; 
+					color: #1a2c3e; 
+					font-weight: 700; 
+				}
+				.lang-switch { 
+					display: flex; 
+					justify-content: center;
+					gap: 10px; 
+					margin-bottom: 25px; 
+				}
+				.lang-btn {
+					font-size: 11px; 
+					padding: 4px 12px;
+					border-radius: 15px;
+					background: #e0e5ec;
+					color: #555; 
+					border: none; 
+					box-shadow: 2px 2px 5px #babecc, -2px -2px 5px #fff;
+					cursor: pointer;
+					font-weight: 600;
+					transition: all 0.2s;
+				}
+				.lang-btn.active { 
+					box-shadow: inset 2px 2px 4px #babecc, inset -2px -2px 4px #fff;
+					color: #2a5298; 
+				}
+				.google-btn i { 
+					font-size: 18px; 
+					color: #ea4335;
+				}
+				.footer-text {
+					text-align: center;
+					font-size: 12px;
+					color: gray; 
+					margin-top: 20px; 
+				}
+			</style>
+			
+		</head>
+		<body>
+			<div class="container-box nm-card">
+				
+				<h2 id="loginTitle"><strong>Login</strong></h2>
+				
+				<div class="lang-switch"><!-- lang is language --!>
+					<button class="lang-btn active" onclick="switchLang('en', this)">EN</button>
+					<button class="lang-btn" onclick="switchLang('zh', this)">ZH</button>
+					<button class="lang-btn" onclick="switchLang('ms', this)">MS</button>
+				</div>
+				
+				<form id="loginForm">
+					<div class="mb-2">
+						<input type="text" id="userInput" class="nm-input" placeholder="Username">
+					</div>
+					<div class="mb-2">
+						<input type="text" id="emailInput" class="nm-input" placeholder="Email Address">
+					</div>
+					<div class="mb-2">
+						<input type="password" id="passInput" class="nm-input" placeholder="Password">
+					</div>
+					
+					<button type="submit" class="nm-btn nm-btn-primary w-100 my-2" id="submitBtn">Login</button>
+
+					<button type="button" class="nm-btn google-btn w-100 my-2 d-flex align-items-center justify-content-center gap-2" onclick="handleGoogleLogin()">
+						<i class="bx bxl-google"></i> <span id="googleText">Continue with Google</span>
+					</button>
+				</form>
+				<p class="footer-text">Online Learning Platform</p>
+			</div>
+			
+			<script>
+				
+					//Language for multi-language UI
+				const langData = {
+					en: { title: "Login",
+						user: "Username",
+						email: "Email Address",
+						pass: "Password",
+						btn: "Login",
+						google: "Continue with Google" 
+					},
+					zh: {
+						title: "登录",
+						user: "用户名",
+						email: "电子邮件地址",
+						pass: "密码",
+						btn: "登录",
+						google: "使用 Google 登录" 
+					},
+					ms: { 
+						title: "Login",
+						user: "Nama Pengguna",
+						email: "Alamat E-mel",
+						pass: "Kata Laluan",
+						btn: "Log Masuk",
+						google: "Teruskan dengan Google"
+					}
+				};
+				
+				function switchLang(lang, btnObj) {
+					document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+					btnObj.classList.add('active');
+					
+					document.getElementById('loginTitle').innerHTML = `<strong>${langData[lang].title}</strong>`;
+					document.getElementById('userInput').placeholder = langData[lang].user;
+					document.getElementById('emailInput').placeholder = langData[lang].email;
+					document.getElementById('passInput').placeholder = langData[lang].pass;
+					document.getElementById('submitBtn').textContent = langData[lang].btn;
+					document.getElementById('googleText').textContent = langData[lang].google;
+				}
+				
+				    // Google login simulation
+					// Validates username before "login"
+				function handleGoogleLogin() {
+					let userVal = document.getElementById('userInput').value.trim();
+					let userRegex = /^[a-zA-Z0-9_]{4,16}$/;
+					
+					//  Google login must have Username
+					if (!userVal) {
+						alert("Please enter a Username first before continuing with Google.");
+						document.getElementById('userInput').focus();
+						return;
+					}
+					
+					if (!userRegex.test(userVal)) {
+						alert("Validation Fault: Username must be alphanumeric and contain 4-16 characters.");
+						return;
+					}
+					
+					const googleSpan = document.getElementById('googleText');
+					googleSpan.innerHTML = `<i class="bx bx-loader-alt bx-spin"></i> Connecting...`;
+					
+					// simulate API delay
+					setTimeout(() => {
+						//save name in chrome local storage
+						localStorage.setItem('savedProfileName', userVal);
+						alert("Google Authentication Successful! Welcome " + userVal +" to Edu Stream Hub");
+						//change to index.html have delay
+						window.location.href = "index.html";
+					}, 1200);
+				}
+					
+				document.getElementById('loginForm').addEventListener('submit', function(e) {
+					e.preventDefault();
+					
+					let userVal = document.getElementById('userInput').value.trim();
+					let emailVal = document.getElementById('emailInput').value.trim();
+					let passVal = document.getElementById('passInput').value;
+					
+					// regex reques
+					let userRegex = /^[a-zA-Z0-9_]{4,16}$/;
+					let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+					//feedback worng text
+					if (!userRegex.test(userVal)) {
+						alert("Validation Fault: Username must be alphanumeric and contain 4-16 characters.");
+						return;
+					}
+					if (!emailRegex.test(emailVal)) {
+						alert("Validation Fault: Please input a structurally valid e-mail destination string.");
+						return;
+					}
+					if (passVal.length < 6) {
+						alert("Validation Fault: Security password key must contain 6 units minimum.");
+						return;
+					}
+					localStorage.setItem('savedProfileName', userVal);
+					alert("Login Successful!");
+					window.location.href = "index.html"; 
+				});
+			</script>
+		</body>
+	</html>
